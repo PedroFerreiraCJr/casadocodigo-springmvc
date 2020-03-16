@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -8,9 +10,13 @@
 		<title>Cadastro de Livro</title>
 	</head>
 	<body>
-		<c:forEach items="${errors}" var="error">
-			<span style="color: #ff0000; display: block;">${error}</span>
-		</c:forEach>
+		<spring:hasBindErrors name="product">
+			<c:forEach items="${errors.allErrors}" var="error">
+				<span style="color: #ff0000; display: block;">
+					<spring:message code="${error.code}" text="${error.defaultMessage}"></spring:message>
+				</span>
+			</c:forEach>
+		</spring:hasBindErrors>
 		<form action="${contexto}/produtos" method="POST">
 			<fieldset>
 				<legend>Cadastro de Livros</legend>

@@ -1,16 +1,16 @@
 package br.com.dotofcodex.casadocodigo.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.dotofcodex.casadocodigo.dao.ProductDAO;
 import br.com.dotofcodex.casadocodigo.model.Product;
 import br.com.dotofcodex.casadocodigo.type.BookType;
+import br.com.dotofcodex.casadocodigo.validator.ProductValidator;
 
 @Controller
 @Transactional
@@ -33,8 +34,12 @@ public class ProductsController {
 	public ProductsController() {
 		super();
 	}
+	
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		binder.setValidator(new ProductValidator());
+	}
 
-	// first method
 	@RequestMapping("/form")
 	public ModelAndView form() {
 		ModelAndView model = new ModelAndView("products/form");
@@ -49,35 +54,14 @@ public class ProductsController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView save(Product produto, RedirectAttributes attributes) {
+	public ModelAndView save(@Valid Product produto, BindingResult result, RedirectAttributes attributes) {
 		logger.info("saving information...");
 		ModelAndView model = new ModelAndView("products/form");
-		boolean hasErrors = false;
-		List<String> errors = new ArrayList<>(5);
 
-		if (StringUtils.isEmpty(produto.getTitle())) {
-			errors.add("O campo título não pode ser vazio");
-			hasErrors = true;
+		if (result.hasErrors()) {
+			return form();
 		}
-
-		if (StringUtils.isEmpty(produto.getDescription())) {
-			errors.add("O campo descrição não pode ser vazio");
-			hasErrors = true;
-		}
-
-		if (produto.getPages() == null || produto.getPages() == 0) {
-			errors.add("O campo pages não pode ser igual a zero");
-			hasErrors = true;
-		}
-
-		if (hasErrors) {
-			logger.info("Há erros na requisição, retornando para a página de cadastro...");
-			model.addObject("errors", errors);
-			model.addObject("types", BookType.values());
-			model.addObject("product", produto);
-			return model;
-		}
-
+		
 		productDAO.save(produto);
 		model = new ModelAndView("redirect:produtos");
 		logger.info(produto.toString());
