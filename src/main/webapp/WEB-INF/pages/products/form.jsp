@@ -8,22 +8,25 @@
 		<title>Cadastro de Livro</title>
 	</head>
 	<body>
+		<c:forEach items="${errors}" var="error">
+			<span style="color: #ff0000; display: block;">${error}</span>
+		</c:forEach>
 		<form action="${contexto}/produtos" method="POST">
 			<fieldset>
 				<legend>Cadastro de Livros</legend>
 				<div>
 					<label for="titulo">Título</label>
-					<input type="text" id="title" name="title" value="" />
+					<input type="text" id="title" name="title" value="${product.title}" />
 				</div>
 				
 				<div>
 					<label for="description">Descrição</label>
-					<textarea id="description" name="description" rows="5" cols="80"></textarea>
+					<textarea id="description" name="description" rows="5" cols="80">${product.description}</textarea>
 				</div>
 				
 				<div>
 					<label for="pages">Número de Páginas</label>
-					<input type="number" id="pages" name="pages" value="" />
+					<input type="number" id="pages" name="pages" value="${product.pages}" />
 				</div>
 				
 				<c:forEach items="${types}" var="type" varStatus="status">
