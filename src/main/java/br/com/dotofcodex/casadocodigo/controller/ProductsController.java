@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,8 +41,8 @@ public class ProductsController {
 		binder.setValidator(new ProductValidator());
 	}
 
-	@RequestMapping("/form")
-	public ModelAndView form() {
+	@RequestMapping(path = "/form", method = RequestMethod.GET)
+	public ModelAndView form(Product produto) {
 		ModelAndView model = new ModelAndView("products/form");
 		model.addObject("types", BookType.values());
 		return model;
@@ -54,12 +55,12 @@ public class ProductsController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView save(@Valid Product produto, BindingResult result, RedirectAttributes attributes) {
+	public ModelAndView save(@Valid @ModelAttribute("product") Product produto, BindingResult result, RedirectAttributes attributes) {
 		logger.info("saving information...");
 		ModelAndView model = new ModelAndView("products/form");
 
 		if (result.hasErrors()) {
-			return form();
+			return form(produto);
 		}
 		
 		productDAO.save(produto);

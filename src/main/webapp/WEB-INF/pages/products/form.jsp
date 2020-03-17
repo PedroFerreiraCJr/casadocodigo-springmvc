@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <!DOCTYPE html>
 <html>
@@ -17,22 +18,36 @@
 				</span>
 			</c:forEach>
 		</spring:hasBindErrors>
-		<form action="${contexto}/produtos" method="POST">
+		<form:form action="${contexto}/produtos" commandName="product" method="POST">
 			<fieldset>
 				<legend>Cadastro de Livros</legend>
+				
 				<div>
-					<label for="titulo">Título</label>
-					<input type="text" id="title" name="title" value="${product.title}" />
+					<label for="title">Título</label>
+					<form:input id="title" path="title" placeholder="Product title"/>
+					<form:errors path="title" />
 				</div>
 				
 				<div>
 					<label for="description">Descrição</label>
-					<textarea id="description" name="description" rows="5" cols="80">${product.description}</textarea>
+					<form:textarea path="description" rows="5" cols="80" placeholder="Product description"/>
+					<form:errors path="description" />
 				</div>
 				
 				<div>
 					<label for="pages">Número de Páginas</label>
-					<input type="number" id="pages" name="pages" value="${product.pages}" />
+					<form:input id="pages" path="pages" placeholder="Product pages"/>
+					<form:errors path="pages" />
+					
+					<!-- 
+					<spring:hasBindErrors name="product">
+						<c:forEach items="${errors.getFieldErrors('pages')}" var="error">
+							<span style="color: #ff0000; display: block;">
+								<spring:message code="${error.code}" text="${error.defaultMessage}"></spring:message>
+							</span>
+						</c:forEach>
+					</spring:hasBindErrors>
+					-->
 				</div>
 				
 				<c:forEach items="${types}" var="type" varStatus="status">
@@ -45,6 +60,6 @@
 				
 				<input type="submit" value="Cadastrar"/>
 			</fieldset>
-		</form>
+		</form:form>
 	</body>
 </html>
