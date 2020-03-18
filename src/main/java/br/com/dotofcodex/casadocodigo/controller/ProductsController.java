@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +18,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.dotofcodex.casadocodigo.dao.ProductDAO;
 import br.com.dotofcodex.casadocodigo.model.Product;
 import br.com.dotofcodex.casadocodigo.type.BookType;
-import br.com.dotofcodex.casadocodigo.validator.ProductValidator;
 
 @Controller
 @Transactional
@@ -36,11 +33,13 @@ public class ProductsController {
 		super();
 	}
 	
+	/*
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
 		binder.setValidator(new ProductValidator());
 	}
-
+	*/
+	
 	@RequestMapping(path = "/form", method = RequestMethod.GET)
 	public ModelAndView form(Product produto) {
 		ModelAndView model = new ModelAndView("products/form");

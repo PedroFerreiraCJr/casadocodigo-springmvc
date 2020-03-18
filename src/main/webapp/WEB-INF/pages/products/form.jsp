@@ -11,13 +11,6 @@
 		<title>Cadastro de Livro</title>
 	</head>
 	<body>
-		<spring:hasBindErrors name="product">
-			<c:forEach items="${errors.allErrors}" var="error">
-				<span style="color: #ff0000; display: block;">
-					<spring:message code="${error.code}" text="${error.defaultMessage}"></spring:message>
-				</span>
-			</c:forEach>
-		</spring:hasBindErrors>
 		<form:form action="${contexto}/produtos" commandName="product" method="POST">
 			<fieldset>
 				<legend>Cadastro de Livros</legend>

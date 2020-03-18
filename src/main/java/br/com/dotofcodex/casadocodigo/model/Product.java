@@ -11,6 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "products")
@@ -19,10 +23,16 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@NotBlank
 	private String title;
 
 	@Lob
+	@NotBlank
 	private String description;
+	
+	@Min(30)
+	@NotNull
 	private Integer pages;
 
 	@ElementCollection(fetch = FetchType.EAGER)
