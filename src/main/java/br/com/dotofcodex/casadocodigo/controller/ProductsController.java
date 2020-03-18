@@ -59,6 +59,7 @@ public class ProductsController {
 		ModelAndView model = new ModelAndView("products/form");
 
 		if (result.hasErrors()) {
+			logger.info("errors were found...");
 			return form(produto);
 		}
 		

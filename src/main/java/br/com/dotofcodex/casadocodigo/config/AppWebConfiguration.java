@@ -1,9 +1,16 @@
 package br.com.dotofcodex.casadocodigo.config;
 
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.format.datetime.DateFormatter;
+import org.springframework.format.datetime.DateFormatterRegistrar;
+import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
+import org.springframework.format.support.DefaultFormattingConversionService;
+import org.springframework.format.support.FormattingConversionService;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -34,5 +41,20 @@ public class AppWebConfiguration {
 		bundle.setCacheSeconds(1);
 		return bundle;
 	}
-	
+
+	@Bean
+	public FormattingConversionService mvcConversionService() {
+		DefaultFormattingConversionService service = new DefaultFormattingConversionService(false);
+		
+		DateTimeFormatterRegistrar formatter = new DateTimeFormatterRegistrar();
+		formatter.setDateFormatter(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		formatter.setDateTimeFormatter(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+		formatter.registerFormatters(service);
+		
+		DateFormatterRegistrar formatter2 = new DateFormatterRegistrar();
+		formatter2.setFormatter(new DateFormatter("dd/MM/yyyy"));
+		formatter2.registerFormatters(service);
+		return service;
+	}
+
 }

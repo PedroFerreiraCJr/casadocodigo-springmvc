@@ -28,6 +28,12 @@
 				</div>
 				
 				<div>
+					<label for="releaseDate">Data de Liberação</label>
+					<form:input type="text" id="releaseDate" path="releaseDate" placeholder="Release Date"/>
+					<form:errors path="releaseDate" />
+				</div>
+				
+				<div>
 					<label for="pages">Número de Páginas</label>
 					<form:input id="pages" path="pages" placeholder="Product pages"/>
 					<form:errors path="pages" />
