@@ -11,14 +11,17 @@ import org.springframework.format.datetime.DateFormatterRegistrar;
 import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import br.com.dotofcodex.casadocodigo.controller.HomeController;
 import br.com.dotofcodex.casadocodigo.dao.ProductDAO;
+import br.com.dotofcodex.casadocodigo.util.FileSaver;
 
 @EnableWebMvc
-@ComponentScan(basePackageClasses = { HomeController.class, ProductDAO.class })
+@ComponentScan(basePackageClasses = { HomeController.class, ProductDAO.class, FileSaver.class })
 public class AppWebConfiguration {
 
 	public AppWebConfiguration() {
@@ -55,6 +58,11 @@ public class AppWebConfiguration {
 		formatter2.setFormatter(new DateFormatter("dd/MM/yyyy"));
 		formatter2.registerFormatters(service);
 		return service;
+	}
+	
+	@Bean
+	public MultipartResolver multipartResolver() {
+		return new StandardServletMultipartResolver();
 	}
 
 }

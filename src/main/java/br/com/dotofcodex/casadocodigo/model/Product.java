@@ -46,6 +46,9 @@ public class Product {
 	@Column(name = "release_date")
 	private Date releaseDate;
 
+	@Column(name = "summary_path")
+	private String summaryPath;
+
 	public Product() {
 		super();
 		this.prices = new ArrayList<>();
@@ -99,12 +102,20 @@ public class Product {
 		this.releaseDate = releaseDate;
 	}
 
+	public String getSummaryPath() {
+		return summaryPath;
+	}
+
+	public void setSummaryPath(String summaryPath) {
+		this.summaryPath = summaryPath;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Product [id=").append(id).append(", title=").append(title).append(", description=")
 				.append(description).append(", pages=").append(pages).append(", prices=").append(prices)
-				.append(", releaseDate=").append(releaseDate).append("]");
+				.append(", releaseDate=").append(releaseDate).append(", summaryPath=").append(summaryPath).append("]");
 		return builder.toString();
 	}
 

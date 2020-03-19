@@ -12,12 +12,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.dotofcodex.casadocodigo.dao.ProductDAO;
 import br.com.dotofcodex.casadocodigo.model.Product;
 import br.com.dotofcodex.casadocodigo.type.BookType;
+import br.com.dotofcodex.casadocodigo.util.FileSaver;
 
 @Controller
 @Transactional
@@ -28,6 +30,9 @@ public class ProductsController {
 
 	@Autowired
 	private ProductDAO productDAO;
+	
+	@Autowired
+	private FileSaver fileSaver;
 
 	public ProductsController() {
 		super();
@@ -54,13 +59,25 @@ public class ProductsController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView save(@Valid @ModelAttribute("product") Product produto, BindingResult result, RedirectAttributes attributes) {
+	public ModelAndView save(MultipartFile summary, @Valid @ModelAttribute("product") Product produto, BindingResult result, RedirectAttributes attributes) {
 		logger.info("saving information...");
+		
 		ModelAndView model = new ModelAndView("products/form");
 
 		if (result.hasErrors()) {
 			logger.info("errors were found...");
 			return form(produto);
+		}
+		
+		logger.info(summary.getName());
+		logger.info(summary.getOriginalFilename());
+		
+		try {
+			produto.setSummaryPath(fileSaver.save("", summary));
+		} catch(Exception e) {
+			ModelAndView error = new ModelAndView("products/form");
+			error.addObject("message_error", "Falha no salvamento do arquivo");
+			return error;
 		}
 		
 		productDAO.save(produto);

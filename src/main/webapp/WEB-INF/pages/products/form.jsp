@@ -11,7 +11,10 @@
 		<title>Cadastro de Livro</title>
 	</head>
 	<body>
-		<form:form action="${contexto}/produtos" commandName="product" method="POST">
+		<c:if test="${not empty message_error}">
+			<h1>${message_error}</h1>
+		</c:if>
+		<form:form action="${contexto}/produtos" commandName="product" method="POST" enctype="multipart/form-data">
 			<fieldset>
 				<legend>Cadastro de Livros</legend>
 				
@@ -47,6 +50,12 @@
 						</c:forEach>
 					</spring:hasBindErrors>
 					-->
+				</div>
+				
+				<div>
+					<label for="summary">Sumário do livro</label>
+					<input type="file" id="summary" name="summary"/>
+					<form:errors path="summaryPath" />
 				</div>
 				
 				<c:forEach items="${types}" var="type" varStatus="status">
