@@ -23,6 +23,8 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<spring-mvc.version>5.2.5.RELEASE</spring-mvc.version>
+		<jackson-core.version>2.11.0</jackson-core.version>
+		<jackson-bind.version>2.11.0</jackson-bind.version>
 		<spring-orm.version>5.2.5.RELEASE</spring-orm.version>
 		<mysql-connector.version>8.0.20</mysql-connector.version>
 		<servlet-api.version>4.0.1</servlet-api.version>
@@ -74,6 +76,16 @@
 					<artifactId>servlet-api</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson-core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson-bind.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
