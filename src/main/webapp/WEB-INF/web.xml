@@ -23,8 +23,13 @@
 	</filter-mapping>
  	-->
  	
+ 	<error-page>
+ 		<error-code>403</error-code>
+ 		<location>/WEB-INF/403.jsp</location>
+ 	</error-page>
+ 	
 	<filter>
-		<filter-name>encodingFilter</filter-name>
+		<filter-name>CharacterSetFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
 		<init-param>
 			<param-name>encoding</param-name>
@@ -36,7 +41,7 @@
 		</init-param>
 	</filter>
 	<filter-mapping>
-		<filter-name>encodingFilter</filter-name>
+		<filter-name>CharacterSetFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 </web-app>
