@@ -30,23 +30,21 @@ public class ProductsController {
 
 	@Autowired
 	private ProductDAO productDAO;
-	
+
 	@Autowired
 	private FileSaver fileSaver;
 
 	public ProductsController() {
 		super();
 	}
-	
+
 	/*
-	@InitBinder
-	protected void initBinder(WebDataBinder binder) {
-		binder.setValidator(new ProductValidator());
-	}
-	*/
-	
+	 * @InitBinder protected void initBinder(WebDataBinder binder) {
+	 * binder.setValidator(new ProductValidator()); }
+	 */
+
 	@RequestMapping(path = "/form", method = RequestMethod.GET)
-	public ModelAndView form(Product produto) {
+	public ModelAndView form(@ModelAttribute("product") Product produto) {
 		ModelAndView model = new ModelAndView("products/form");
 		model.addObject("types", BookType.values());
 		return model;
@@ -59,27 +57,28 @@ public class ProductsController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView save(MultipartFile summary, @Valid @ModelAttribute("product") Product produto, BindingResult result, RedirectAttributes attributes) {
+	public ModelAndView save(MultipartFile summary, @Valid @ModelAttribute("product") Product produto,
+			BindingResult result, RedirectAttributes attributes) {
 		logger.info("saving information...");
-		
+
 		ModelAndView model = new ModelAndView("products/form");
 
 		if (result.hasErrors()) {
 			logger.info("errors were found...");
 			return form(produto);
 		}
-		
+
 		logger.info(summary.getName());
 		logger.info(summary.getOriginalFilename());
-		
+
 		try {
 			produto.setSummaryPath(fileSaver.save("", summary));
-		} catch(Exception e) {
+		} catch (Exception e) {
 			ModelAndView error = new ModelAndView("products/form");
 			error.addObject("message_error", "Falha no salvamento do arquivo");
 			return error;
 		}
-		
+
 		productDAO.save(produto);
 		model = new ModelAndView("redirect:produtos");
 		logger.info(produto.toString());

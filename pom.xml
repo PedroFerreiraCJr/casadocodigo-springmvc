@@ -23,14 +23,15 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<spring-mvc.version>5.2.5.RELEASE</spring-mvc.version>
+		<spring-support.version>5.2.5.RELEASE</spring-support.version>
 		<jackson-core.version>2.11.0</jackson-core.version>
 		<jackson-bind.version>2.11.0</jackson-bind.version>
-		<spring-orm.version>5.2.5.RELEASE</spring-orm.version>
-		<mysql-connector.version>8.0.20</mysql-connector.version>
 		<servlet-api.version>4.0.1</servlet-api.version>
 		<jsp.version>2.3.3</jsp.version>
 		<jstl-api.version>1.2</jstl-api.version>
 		<jstl-impl.version>1.2</jstl-impl.version>
+		<spring-orm.version>5.2.5.RELEASE</spring-orm.version>
+		<mysql-connector.version>8.0.20</mysql-connector.version>
 		<slf4j-api.version>1.7.25</slf4j-api.version>
 		<log4j12.version>1.7.25</log4j12.version>
 		<log4j.version>1.2.17</log4j.version>
@@ -39,9 +40,24 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>2.10.6</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring-mvc.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring-orm.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring-support.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -101,11 +117,6 @@
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<artifactId>hibernate-jpa-2.1-api</artifactId>
 			<version>1.0.2.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>${spring-orm.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>

@@ -14,7 +14,7 @@
 		<c:if test="${not empty message_error}">
 			<h1>${message_error}</h1>
 		</c:if>
-		<form:form action="${contexto}/produtos" commandName="product" method="POST" enctype="multipart/form-data">
+		<form:form action="${contexto}/produtos" modelAttribute="product" method="POST" enctype="multipart/form-data">
 			<fieldset>
 				<legend>Cadastro de Livros</legend>
 				
