@@ -5,6 +5,7 @@ import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -22,14 +23,15 @@ public class JPAConfiguration {
 	}
 
 	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource,
+			@Qualifier("additionalProperties") Properties properties) {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-		em.setDataSource(dataSource());
+		em.setDataSource(dataSource);
 		em.setPackagesToScan(new String[] { "br.com.dotofcodex.casadocodigo.model" });
 
 		JpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
 		em.setJpaVendorAdapter(adapter);
-		em.setJpaProperties(additionalProperties());
+		em.setJpaProperties(properties);
 
 		return em;
 	}
@@ -37,7 +39,7 @@ public class JPAConfiguration {
 	@Bean
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+		dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 		dataSource.setUrl("jdbc:mysql://localhost:3306/casadocodigo");
 		dataSource.setUsername("root");
 		dataSource.setPassword("pedro");
@@ -51,10 +53,11 @@ public class JPAConfiguration {
 		return tm;
 	}
 
-	private Properties additionalProperties() {
+	@Bean
+	public Properties additionalProperties() {
 		Properties props = new Properties();
 		props.setProperty("hibernate.hbm2ddl.auto", "update");
-		props.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+		props.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
 		props.setProperty("hibernate.show_sql", "true");
 		return props;
 	}
