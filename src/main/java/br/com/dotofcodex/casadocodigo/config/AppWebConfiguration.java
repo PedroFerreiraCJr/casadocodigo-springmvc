@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.format.datetime.DateFormatterRegistrar;
@@ -29,6 +30,7 @@ import br.com.dotofcodex.casadocodigo.resolver.JsonViewResolver;
 import br.com.dotofcodex.casadocodigo.util.FileSaver;
 
 @EnableWebMvc
+@Configuration
 @ComponentScan(basePackageClasses = { HomeController.class, ProductDAO.class, Product.class, FileSaver.class })
 public class AppWebConfiguration {
 
