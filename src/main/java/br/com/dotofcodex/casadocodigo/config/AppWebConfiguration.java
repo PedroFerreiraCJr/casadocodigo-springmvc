@@ -21,6 +21,7 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -38,7 +39,14 @@ public class AppWebConfiguration implements WebMvcConfigurer {
 	public AppWebConfiguration() {
 		super();
 	}
-
+	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		super.addInteceptors(registry);
+		// spring docs: https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/config/annotation/WebMvcConfigurer.html
+		// reference: https://stackoverflow.com/questions/25373053/how-to-create-my-own-filter-with-spring-mvc
+	}
+	
 	@Bean
 	public InternalResourceViewResolver internalResourceViewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
