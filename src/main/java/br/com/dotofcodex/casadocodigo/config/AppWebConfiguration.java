@@ -42,7 +42,6 @@ public class AppWebConfiguration implements WebMvcConfigurer {
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		super.addInteceptors(registry);
 		// spring docs: https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/config/annotation/WebMvcConfigurer.html
 		// reference: https://stackoverflow.com/questions/25373053/how-to-create-my-own-filter-with-spring-mvc
 	}
