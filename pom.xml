@@ -27,7 +27,7 @@
 		<spring-security-config.version>5.2.4.RELEASE</spring-security-config.version>
 		<spring-security-taglibs.version>5.2.4.RELEASE</spring-security-taglibs.version>
 		<spring-security-web.version>5.2.4.RELEASE</spring-security-web.version>
-		<spring-security-core.version>5.2.4.RELEASE</spring-security-core.version>
+		<spring-security-core.version>5.2.5.RELEASE</spring-security-core.version>
 		<jackson-core.version>2.11.0</jackson-core.version>
 		<jackson-bind.version>2.11.0</jackson-bind.version>
 		<servlet-api.version>4.0.1</servlet-api.version>
